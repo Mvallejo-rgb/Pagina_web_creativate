@@ -1,0 +1,88 @@
+﻿@model Parkease.Models.Entidades.Reserva
+
+@{
+    ViewData["Title"] = "Editar Reserva";
+}
+
+<h2>Editar Reserva</h2>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<form asp-controller="Reserva" asp-action="Edit" method="post">
+    <input type="hidden" asp-for="idReserva" />
+    <div class="mb-3">
+        <label asp-for="fechaReserva" class="form-label">Fecha reserva</label>
+        <input asp-for="fechaReserva" type="date" class="form-control" />
+        <span asp-validation-for="fechaReserva" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="horaInicio" class="form-label">Hora de Inicio</label>
+        <input asp-for="horaInicio" type="time" class="form-control" />
+        <span asp-validation-for="horaInicio" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="horaFin" class="form-label">Hora de Fin</label>
+        <input asp-for="horaFin" type="time" class="form-control" />
+        <span asp-validation-for="horaFin" class="text-danger"></span>
+    </div>
+
+
+    <div class="mb-3">
+        <label asp-for="tipoVeh" class="form-label">Tipo de Vehículo</label>
+        <select asp-for="tipoVeh" class="form-control">
+            <option value="Carro">Carro</option>
+            <option value="Moto">Moto</option>
+            <option value="Bicicleta">Bicicleta</option>
+            <option value="Otros">Otros</option>
+        </select>
+        <span asp-validation-for="tipoVeh" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+    <a asp-action="MisReservas" class="btn btn-secondary">Cancelar</a>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let fechaInput = document.querySelector('input[name="fechaReserva"]');
+
+        let today = new Date();
+        let year = today.getFullYear();
+        let month = (today.getMonth() + 1).toString().padStart(2, '0');
+        let day = today.getDate().toString().padStart(2, '0');
+
+        let minDate = `${year}-${month}-${day}`;
+        fechaInput.setAttribute("min", minDate);
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let horaInicio = document.querySelector('input[name="horaInicio"]');
+        let horaFin = document.querySelector('input[name="horaFin"]');
+        let formulario = document.querySelector("form");
+
+        formulario.addEventListener("submit", function (event) {
+            let inicio = horaInicio.value;
+            let fin = horaFin.value;
+
+            if (inicio && fin && fin <= inicio) {
+                event.preventDefault(); // Evita que se envíe el formulario
+
+                Swal.fire({
+                    icon: "warning",
+                    title: "¡Atención!",
+                    text: "La hora de fin debe ser mayor que la de inicio.",
+                    confirmButtonText: "Entendido",
+                    confirmButtonColor: "#007bff"
+                });
+
+                horaFin.value = ""; // Borra la hora de fin para que el usuario la corrija
+            }
+        });
+    });
+</script>

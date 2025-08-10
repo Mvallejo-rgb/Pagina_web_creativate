@@ -1,0 +1,166 @@
+﻿@model Parkease.Models.Entidades.Reserva
+
+<h2 class="text-center fw-bold mb-4">Crear Nueva Reserva</h2>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<div class="container d-flex justify-content-center align-items-center mt-4 mb-5">
+    <div class="card shadow-lg rounded p-4" style="max-width: 1200px; width: 100%;">
+        <div class="row g-0">
+            <!-- Imagen decorativa (solo visible en pantallas grandes) -->
+            <div class="col-md-5 d-none d-md-block">
+                <img src="https://img.freepik.com/free-photo/full-shot-father-holding-baby-carrier_23-2150167046.jpg?t=st=1743011270~exp=1743014870~hmac=3bae26645ecbab8dc05c263c1b91e49825778204f074a5405fdfe0aded117334&w=740" class="img-fluid rounded-start h-100" alt="Imagen decorativa">
+            </div>
+
+            <!-- Formulario -->
+            <div class="col-md-7 p-4">
+                <h3 class="text-center fw-semibold">Realiza tu reservación</h3>
+                <p class="text-muted text-center">Completa los datos para reservar tu espacio</p>
+
+                <form asp-action="Create" id="reservation-form" class="row g-3 needs-validation" method="post" novalidate>
+
+                    <!-- Fecha de reserva con ícono -->
+                    <div class="col-md-12">
+                        <label for="reservationDateTime" class="form-label fw-semibold">Fecha de Reserva*</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-calendar-event"></i> 📅</span>
+                            <input asp-for="fechaReserva" type="date" class="form-control" id="reservationDateTime" required />
+                        </div>
+                        <div class="invalid-feedback">Debe seleccionar una fecha válida de reserva.</div>
+                    </div>
+
+                    <!-- Hora de inicio con ícono -->
+                    <div class="col-md-6">
+                        <label for="horaInicio" class="form-label fw-semibold">Hora de Inicio*</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-clock"></i> 🕕</span>
+                            <input asp-for="horaInicio" type="time" class="form-control" id="horaInicio" required />
+                        </div>
+                        <div class="invalid-feedback">Debe seleccionar una hora de inicio válida.</div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="horaFin" class="form-label fw-semibold">Hora de Fin*</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="bi bi-clock-history"></i> 🕡</span>
+                            <input asp-for="horaFin" type="time" class="form-control" id="horaFin" required />
+                        </div>
+                        <div class="invalid-feedback">Debe seleccionar una hora de fin válida.</div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label for="vehicleType" class="form-label fw-semibold">Tipo de Vehículo</label>
+                        <select asp-for="tipoVeh" class="form-select" id="vehicleType" required>
+                            <option value="" selected disabled>Seleccione un tipo</option>
+                            <option value="Carro">Carro</option>
+                            <option value="Moto">Moto</option>
+                            <option value="Bicicleta">Bicicleta</option>
+                            <option value="Otros">Otros</option>
+                        </select>
+                        <div class="invalid-feedback">Debe seleccionar el tipo de vehículo.</div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <label for="estadoReserva" class="form-label fw-semibold">Estado</label>
+                        <select asp-for="estadoReserva" class="form-select" id="estadoReserva" required>
+                            <option value="Confirmada">Confirmado</option>
+                            <option value="Cancelado">Cancelado</option>
+                        </select>
+                        <div class="invalid-feedback">Debe seleccionar un estado.</div>
+                    </div>
+
+                    <!-- Botones -->
+                    <div class="col-md-12 text-center">
+                        <button type="submit" class="btn btn-primary fw-bold">Guardar</button>
+                        <a asp-controller="DashBoard" asp-action="Index" class="btn btn-outline-primary">Atrás</a>
+                        <a asp-controller="Reserva" asp-action="MisReservas" class="btn btn-secondary">Mis Reservas</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    input[type="time"] {
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        padding: 10px;
+        font-size: 16px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        background-color: #fff;
+    }
+
+        input[type="time"]:focus {
+            border-color: #007bff;
+            box-shadow: 0px 0px 5px rgba(0, 123, 255, 0.5);
+        }
+
+    input[type="date"] {
+        appearance: none; 
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        padding: 10px;
+        font-size: 16px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        background-color: #fff;
+    }
+
+        
+        input[type="date"]:focus {
+            border-color: #007bff;
+            box-shadow: 0px 0px 5px rgba(0, 123, 255, 0.5);
+        }
+</style>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let horaInicio = document.getElementById("horaInicio");
+        let horaFin = document.getElementById("horaFin");
+
+        // Configura la hora mínima para evitar selecciones pasadas
+        let now = new Date();
+        let currentHour = now.getHours().toString().padStart(2, '0');
+        let currentMinute = now.getMinutes().toString().padStart(2, '0');
+        let minTime = currentHour + ":" + currentMinute;
+        horaInicio.setAttribute("min", minTime);
+
+        // Validar que la hora de fin sea mayor que la de inicio
+        horaInicio.addEventListener("change", function () {
+            horaFin.value = ""; // Resetea la hora de fin al cambiar la de inicio
+            horaFin.setAttribute("min", horaInicio.value); // Ajusta la mínima en la hora de fin
+        });
+
+        document.getElementById("reservation-form").addEventListener("submit", function (event) {
+            var horaInicioValue = horaInicio.value;
+            var horaFinValue = horaFin.value;
+
+            var startTime = new Date("2000-01-01 " + horaInicioValue);
+            var endTime = new Date("2000-01-01 " + horaFinValue);
+
+            if (startTime >= endTime) {
+                event.preventDefault(); // Evita que el formulario se envíe
+
+                Swal.fire({
+                    icon: "warning",
+                    title: "¡Atención!",
+                    text: "La hora de fin debe ser mayor que la hora de inicio.",
+                    confirmButtonText: "Entendido",
+                    confirmButtonColor: "#007bff"
+                });
+            }
+        });
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let fechaInput = document.querySelector('input[name="fechaReserva"]');
+
+        let today = new Date();
+        let year = today.getFullYear();
+        let month = (today.getMonth() + 1).toString().padStart(2, '0');
+        let day = today.getDate().toString().padStart(2, '0');
+
+        let minDate = `${year}-${month}-${day}`;
+        fechaInput.setAttribute("min", minDate);
+    });
+</script>

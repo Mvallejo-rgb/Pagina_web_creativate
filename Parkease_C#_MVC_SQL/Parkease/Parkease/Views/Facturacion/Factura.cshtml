@@ -1,0 +1,123 @@
+﻿@model Parkease.Models.Entidades.Factura
+
+@{
+    ViewData["Title"] = "Solicitar Factura";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-primary text-white text-center">
+                    <h4 class="mb-0">Solicitud de Factura</h4>
+                </div>
+
+                <div class="card-body p-4">
+                    @if (TempData["Mensaje"] != null)
+                    {
+                        <div class="alert alert-success text-center d-flex align-items-center fade show" role="alert">
+                            <i class="bi bi-check-circle-fill me-2"></i> @TempData["Mensaje"]
+                        </div>
+                    }
+                    @if (TempData["Error"] != null)
+                    {
+                        <div class="alert alert-danger text-center d-flex align-items-center fade show" role="alert">
+                            <i class="bi bi-exclamation-triangle-fill me-2"></i> @TempData["Error"]
+                        </div>
+                    }
+
+                    <form asp-controller="Facturacion" asp-action="SolicitarFactura" method="post" class="needs-validation" novalidate>
+                        @Html.AntiForgeryToken()
+
+                        <div class="mb-3">
+                            <label class="form-label">Tipo de Documento*</label>
+                            <select class="form-select" asp-for="tipoDocumento" required>
+                                <option value="">Seleccione...</option>
+                                <option value="CC">Cédula de Ciudadanía</option>
+                                <option value="CE">Cédula de Extranjería</option>
+                            </select>
+                            <div class="invalid-feedback">Seleccione un tipo de documento.</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Número de Documento*</label>
+                            <input type="text" class="form-control" asp-for="numDocumento" required pattern="\d{6,10}" maxlength="10" />
+                            <div class="invalid-feedback">Ingrese un número de documento válido (6-10 dígitos).</div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Primer Nombre*</label>
+                                <input type="text" class="form-control" asp-for="primerNombre" required />
+                                <div class="invalid-feedback">Ingrese su primer nombre.</div>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label">Primer Apellido*</label>
+                                <input type="text" class="form-control" asp-for="primerApellido" required />
+                                <div class="invalid-feedback">Ingrese su primer apellido.</div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Correo Electrónico*</label>
+                            <input type="email" class="form-control" asp-for="correo" required />
+                            <div class="invalid-feedback">Ingrese un correo válido.</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Fecha de parqueo*</label>
+                            <input asp-for="fechaParqueo" type="date" class="form-control" required value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                            <div class="invalid-feedback">Debe seleccionar una fecha válida de reserva.</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Placa del Vehículo*</label>
+                            <input type="text" class="form-control text-uppercase" asp-for="placa" required pattern="[A-Z]{3}\d{2}[A-Z0-9]" />
+                            <div class="invalid-feedback">Formato válido: AAA123 o AAA12A.</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Ciudad*</label>
+                            <select class="form-select" asp-for="ciudad" required>
+                                <option value="">Seleccione una ciudad...</option>
+                                <option value="Bogotá">Bogotá</option>
+                                <option value="Chía">Chía</option>
+                                <option value="Soacha">Soacha</option>
+                            </select>
+                            <div class="invalid-feedback">Seleccione la ciudad donde usó el servicio.</div>
+                        </div>
+
+                        <button type="submit" class="btn btn-success w-100 py-2">Enviar Solicitud</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function () {
+        'use strict';
+        var forms = document.querySelectorAll('.needs-validation');
+
+        Array.prototype.slice.call(forms).forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+            }, false);
+        });
+
+        // Ocultar alertas automáticamente después de 3 segundos
+        setTimeout(function () {
+            let alert = document.querySelector('.alert');
+            if (alert) {
+                alert.classList.add('fade');
+                setTimeout(() => alert.remove(), 500);
+            }
+        }, 3000);
+    })();
+</script>

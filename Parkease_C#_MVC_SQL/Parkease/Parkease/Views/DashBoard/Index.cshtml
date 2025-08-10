@@ -1,0 +1,81 @@
+﻿@{
+    ViewData["Title"] = "Dashboard";
+}
+<br />
+@{
+    var usuarioEmail = Context.Session.GetString("correo");
+}
+
+@if (!string.IsNullOrEmpty(usuarioEmail))
+{
+    <div class="alert alert-success text-center">
+        <h5>Bienvenido, @usuarioEmail</h5>
+    </div>
+}
+<!-- Sidebar Offcanvas -->
+<div class="offcanvas offcanvas-start show" tabindex="-1" id="offcanvas" aria-labelledby="offcanvasLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasLabel">¡HOLA NUEVAMENTE!</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        Nos alegra tenerte por aquí, ¿qué quieres hacer hoy?...
+    </div>
+</div>
+
+<div class="row g-0 bg-light position-relative shadow rounded overflow-hidden">
+  
+    <div class="col-md-6 p-0">
+        <img src="~/imagenes/woman_moto.jpg" class="img-fluid h-100 object-fit-cover rounded-start" alt="Imagen de parqueadero">
+    </div>
+
+    
+    <div class="col-md-6 p-4 d-flex flex-column justify-content-center text-center">
+        <h4 class="text-primary fw-bold">¡Gracias por elegirnos!</h4>
+        <p class="text-muted">Encuentra el mejor precio, la calidad y la confianza en los parqueaderos cercanos en tu zona.</p>
+    </div>
+
+   
+    <div class="position-absolute top-0 end-0 bg-primary text-white p-3 rounded-bottom-start">
+        <h5 class="mb-0">Bienvenido</h5>
+    </div>
+</div>
+
+
+<div class="row mt-4">
+    <div class="col-md-4">
+        <div class="card" style="width: 100%;">
+            <img src="~/imagenes/muchacha_limpia.jpg"
+                 class="card-img-top" alt="Reservar parqueadero">
+            <div class="card-body">
+                <h5 class="card-title">Realiza tu reserva</h5>
+                <p class="card-text">Realiza la reservación que solicites y encuentra el parqueadero más cercano.</p>
+                <a asp-controller="Reserva" asp-action="Create" class="btn btn-primary">¡Reserva ahora!</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card" style="width: 100%;">
+            <img src="~/imagenes/muchacha.jpg"
+                 class="card-img-top" alt="Ver mis reservas">
+            <div class="card-body">
+                <h5 class="card-title">Mis reservas</h5>
+                <p class="card-text">Encuentra aquí tus reservas e históricos o simplemente cambia tu reservación.</p>
+                <a asp-controller="Reserva" asp-action="MisReservas" class="btn btn-primary">Mis Reservas</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card" style="width: 100%;">
+            <img src="~/imagenes/carro.jpg"
+                 class="card-img-top" alt="Registrar vehículo">
+            <div class="card-body">
+                <h5 class="card-title">Mis Vehículos</h5>
+                <p class="card-text">Registra tu vehículo para que te sientas seguro usando nuestra plataforma.</p>
+                <a asp-controller="Vehiculos" asp-action="Create" class="btn btn-primary">Mis Vehículos</a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,36 @@
+﻿@{
+    ViewData["Title"] = "Error Interno del Servidor";
+}
+<main class="d-flex flex-column justify-content-center align-items-center text-center min-vh-100">
+    <div class="error-500 p-4 rounded shadow-lg bg-light">
+        <img src="~/imagenes/logo2.png" alt="Logo" width="200px" class="mb-3">
+
+        <h1 class="error-codigo text-danger fw-bold display-4">¡Algo salió mal!</h1>
+        <h2 class="error-mensaje text-white bg-danger p-2 rounded">Error 500</h2>
+
+        <p class="p-descrip text-muted fs-5 mt-3">
+            Se ha producido un problema en el servidor. <br>
+            Intenta actualizar la página o vuelve a la página de inicio.
+        </p>
+
+        <div class="mt-4 d-flex gap-2 justify-content-center">
+            <a href="@Url.Action("Index", "Home")" class="btn btn-warning px-3 py-1 fw-bold rounded shadow-sm transition">
+                <i class="fas fa-home me-1"></i> Inicio
+            </a>
+            <button class="btn btn-secondary px-3 py-1 fw-bold rounded shadow-sm transition" onclick="location.reload();">
+                <i class="fas fa-sync-alt me-1"></i> Actualizar
+            </button>
+        </div>
+
+        <style>
+            .btn {
+                font-size: 0.9rem;
+                transition: all 0.2s ease-in-out;
+            }
+
+                .btn:hover {
+                    transform: scale(1.05);
+                }
+        </style>
+    </div>
+</main>

@@ -1,0 +1,179 @@
+﻿<main class="body-pqrs">
+    <div class="container-pqrs">
+        <form class="form-pqrs shadow-lg needs-validation" novalidate id="contactForm">
+            <h3 class="h3-pqrs text-center">📩 Escríbenos</h3>
+            <p class="p-pqrs text-center">
+                Para nosotros es de gran valor conocer tu opinión. Escríbenos y te responderemos en breve.
+            </p>
+
+            <div class="mb-3">
+                <label for="nombre" class="form-label">👤 Nombre:</label>
+                <input type="text" id="nombre" class="form-control" placeholder="Escribe tu nombre" required>
+                <div class="invalid-feedback">Por favor, ingresa tu nombre.</div>
+            </div>
+
+            <div class="mb-3">
+                <label for="correo" class="form-label">✉️ Correo:</label>
+                <input type="email" id="correo" class="form-control" placeholder="Escribe tu correo" required>
+                <div class="invalid-feedback">Por favor, ingresa un correo válido.</div>
+            </div>
+
+            <div class="mb-3">
+                <label for="mensaje" class="form-label">📝 Mensaje:</label>
+                <textarea class="form-control" id="mensaje" rows="5" placeholder="Escribe tu mensaje..." required></textarea>
+                <div class="invalid-feedback">Por favor, ingresa tu mensaje.</div>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100">📩 Enviar Mensaje</button>
+
+            <div id="successMessage" class="alert alert-success mt-3 text-center d-none" role="alert">
+                ✅ ¡Mensaje enviado con éxito! Te responderemos pronto.
+            </div>
+        </form>
+
+        <div class="info-pqrs shadow-lg">
+            <img class="img-pqrs" src="https://img.freepik.com/free-photo/online-payment-security-concept-3d-phone-bill_107791-16722.jpg?t=st=1743015842~exp=1743019442~hmac=46752e46e670c9b254b4b223993f770cd600379c2d40908e328fa1bfba630544&w=1060" alt="Imagen contacto">
+
+            <div class="location-pqrs">
+                <div class="icons-pqrs">
+                    <img src="~/imagenes/geo-alt-fill.svg" class="gps" alt="Icono GPS">
+                    <p class="icons-p-pqrs">📍 Calle 123a # 115-90</p>
+                </div>
+                <div class="icons-pqrs">
+                    <img src="~/imagenes/telephone-fill.svg" alt="Icono teléfono">
+                    <p class="icons-p-pqrs">📞 3112818618</p>
+                </div>
+                <div class="icons-pqrs">
+                    <img src="~/imagenes/envelope-at-fill.svg" class="gps" alt="Icono correo">
+                    <p class="icons-p-pqrs">📧 parkease@gmail.com</p>
+                </div>
+            </div>
+            <div class="social-link-pqrs text-center">
+                <a class="a-pqrs" href="#"><i class="fab fa-facebook-f"></i></a>
+                <a class="a-pqrs" href="#"><i class="fab fa-instagram"></i></a>
+                <a class="a-pqrs" href="#"><i class="fa-brands fa-twitter"></i></a>
+            </div>
+        </div>
+    </div>
+</main>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById("contactForm");
+        const successMessage = document.getElementById("successMessage");
+
+        form.addEventListener("submit", function (event) {
+            event.preventDefault();
+            event.stopPropagation();
+
+            if (form.checkValidity()) {
+                successMessage.classList.remove("d-none"); 
+                form.reset(); // Limpiar formulario
+                form.classList.remove("was-validated"); 
+            } else {
+                form.classList.add("was-validated"); 
+            }
+        });
+    });
+</script>
+
+<style>
+    .body-pqrs {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        background-color: #f4f4f4;
+        padding: 40px 20px;
+    }
+
+    .container-pqrs {
+        display: flex;
+        flex-wrap: wrap;
+        max-width: 1000px;
+        width: 100%;
+        gap: 30px;
+    }
+
+    .form-pqrs {
+        flex: 1;
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .h3-pqrs {
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: #333;
+    }
+
+    .p-pqrs {
+        font-size: 1rem;
+        color: #666;
+    }
+
+    .info-pqrs {
+        flex: 1;
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    .img-pqrs {
+        width: 100%;
+        max-height: 200px;
+        object-fit: cover;
+        border-radius: 10px;
+    }
+
+    .location-pqrs {
+        margin-top: 20px;
+    }
+
+    .icons-pqrs {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 10px;
+    }
+
+        .icons-pqrs img {
+            width: 25px;
+        }
+
+    .icons-p-pqrs {
+        font-size: 1rem;
+        color: #444;
+    }
+
+    .social-link-pqrs {
+        margin-top: 20px;
+    }
+
+    .a-pqrs {
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        background: #007bff;
+        color: white;
+        text-align: center;
+        border-radius: 50%;
+        margin: 5px;
+        font-size: 1.2rem;
+        transition: all 0.3s;
+    }
+
+        .a-pqrs:hover {
+            background: #0056b3;
+        }
+
+        .info-pqrs, .form-pqrs {
+            width: 100%;
+        }
+    }
+</style>

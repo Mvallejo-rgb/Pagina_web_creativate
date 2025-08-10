@@ -1,0 +1,117 @@
+﻿@model Parkease.Models.Entidades.Conductor
+
+@{
+    ViewData["Title"] = "Editar Perfil";
+}
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+<h2 class="text-center fw-bold mb-4">Editar Perfil</h2>
+<input type="hidden" name="idConductor" value="@Model.idConductor" />
+<div class="container d-flex justify-content-center align-items-center mt-4 mb-5">
+    <div class="card shadow-lg rounded p-4" style="max-width: 600px; width: 100%;">
+        <div class="row g-0">
+            <div class="col p-4">
+                <h3 class="text-center fw-semibold">Actualiza tu información</h3>
+                <p class="text-muted text-center">Modifica los datos que necesites y guarda los cambios</p>
+
+                <form method="post" class="needs-validation" novalidate>
+                    <div class="mb-3">
+                        <label for="primerNombre" class="form-label fw-semibold">Primer Nombre</label>
+                        <input type="text" class="form-control" id="primerNombre" name="primerNombre" value="@Model.primerNombre" required pattern="\S+.*" />
+                        <div class="invalid-feedback">Este campo no puede estar vacío ni contener solo espacios.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="primerApellido" class="form-label fw-semibold">Primer Apellido</label>
+                        <input type="text" class="form-control" id="primerApellido" name="primerApellido" value="@Model.primerApellido" required pattern="\S+.*" />
+                        <div class="invalid-feedback">Este campo no puede estar vacío ni contener solo espacios.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="numDocu" class="form-label fw-semibold">Número de Documento</label>
+                        <input type="text" class="form-control" id="numDocu" name="numDocu" value="@Model.numDocu" required pattern="\S+.*" />
+                        <div class="invalid-feedback">Este campo no puede estar vacío ni contener solo espacios.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="correo" class="form-label fw-semibold">Correo</label>
+                        <input type="email" class="form-control" id="correo" name="correo" value="@Model.correo" required />
+                        <div class="invalid-feedback">Ingrese un correo válido.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="edad" class="form-label fw-semibold">Edad</label>
+                        <input type="number" class="form-control" id="edad" name="edad" value="@Model.edad" required min="1" />
+                        <div class="invalid-feedback">Ingrese una edad válida.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="placa" class="form-label fw-semibold">Placa</label>
+                        <input type="text" class="form-control" id="placa" name="placa" value="@Model.placa" required pattern="\S+.*" />
+                        <div class="invalid-feedback">Este campo no puede estar vacío ni contener solo espacios.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="contrasena" class="form-label fw-semibold">Contraseña</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="contrasena" name="contrasena" value="@Model.contrasena" required pattern="\S+.*" />
+                            <span class="input-group-text" id="togglePassword" style="cursor: pointer;">
+                                <i class="fa fa-eye" id="eyeIcon"></i>
+                            </span>
+                            <div class="invalid-feedback">Este campo no puede estar vacío ni contener solo espacios.</div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="confirmaContra" class="form-label fw-semibold">Confirmar Contraseña</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" id="confirmaContra" name="confirmaContra" value="@Model.confirmaContra" required pattern="\S+.*" />
+                            <span class="input-group-text" id="toggleConfirmPassword" style="cursor: pointer;">
+                                <i class="fa fa-eye" id="confirmEyeIcon"></i>
+                            </span>
+                            <div class="invalid-feedback">Este campo no puede estar vacío ni contener solo espacios.</div>
+                        </div>
+                    </div>
+
+                    <div class="text-center mt-4">
+                        <button type="submit" class="btn btn-primary fw-bold">Actualizar</button>
+                        <a asp-controller="DashBoard" asp-action="Index" class="btn btn-outline-primary">Atrás</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    (function () {
+        'use strict';
+        var forms = document.querySelectorAll('.needs-validation');
+        Array.prototype.slice.call(forms).forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+            }, false);
+        });
+    })();
+
+    document.getElementById("togglePassword").addEventListener("click", function () {
+        var password = document.getElementById("contrasena");
+        password.type = password.type === "password" ? "text" : "password";
+        document.getElementById("eyeIcon").classList.toggle("fa-eye-slash");
+    });
+
+    document.getElementById("toggleConfirmPassword").addEventListener("click", function () {
+        var confirmPassword = document.getElementById("confirmaContra");
+        confirmPassword.type = confirmPassword.type === "password" ? "text" : "password";
+        document.getElementById("confirmEyeIcon").classList.toggle("fa-eye-slash");
+    });
+</script>

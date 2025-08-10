@@ -1,0 +1,77 @@
+﻿@model Parkease.Models.Entidades.Vehiculo
+
+<h2>Editar Vehículo</h2>
+<br />
+
+<div class="card">
+        <img src="@Url.Content(Model.imagenReserva)" alt="Imagen del vehículo" style="width: 100%; height: 200px; object-fit: cover; border-radius: 10px;">
+   <div class="card-body">
+       <form asp-action="EditarVehiculo" asp-controller="Vehiculos" method="post" enctype="multipart/form-data">
+           <input type="hidden" asp-for="idVehiculo" />
+
+
+           <div class="mb-3">
+               <label class="form-label">Placa</label>
+               <input type="text" asp-for="placaVeh" class="form-control" required>
+           </div>
+
+           <div class="mb-3">
+               <label class="form-label">Marca</label>
+               <input type="text" asp-for="marcaVeh" class="form-control" required>
+           </div>
+
+           <div class="mb-3">
+               <label class="form-label">Modelo</label>
+               <input type="number" asp-for="modeloVeh" class="form-control" required>
+           </div>
+
+           <div class="mb-3">
+               <label class="form-label">Color</label>
+               <input type="text" asp-for="colorVeh" class="form-control" required>
+           </div>
+
+           <div class="mb-3">
+               <label class="form-label">Tipo</label>
+               <select asp-for="tipoVeh" class="form-control" required>
+                   <option value="Carro">Carro</option>
+                   <option value="Moto">Moto</option>
+                   <option value="Bicicleta">Bicicleta</option>
+               </select>
+           </div>
+
+           <div class="mb-3">
+               <label class="form-label">Actualizar Imagen</label>
+               <input type="file" name="imagen" class="form-control">
+           </div>
+
+           <button type="submit" class="btn btn-success">Guardar Cambios</button>
+       </form>
+
+        <form id="delete-vehicle-form" asp-action="EliminarVehiculo" asp-controller="Vehiculos" method="post">
+            <input type="hidden" name="idVehiculo" value="@Model.idVehiculo" />
+            <button type="button" class="btn btn-danger mt-2" onclick="confirmDelete()">Eliminar Vehículo</button>
+        </form>
+
+        <a asp-action="Index" class="btn btn-secondary">Atrás</a>
+
+        <!-- SweetAlert2 -->
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        <script>
+            function confirmDelete() {
+                Swal.fire({
+                    title: "¿Estás seguro?",
+                    text: "Esta acción no se puede deshacer. El vehículo será eliminado permanentemente.",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#d33",
+                    cancelButtonColor: "#3085d6",
+                    confirmButtonText: "Sí, eliminar",
+                    cancelButtonText: "Cancelar"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        document.getElementById("delete-vehicle-form").submit();
+                    }
+                });
+            }
+        </script>

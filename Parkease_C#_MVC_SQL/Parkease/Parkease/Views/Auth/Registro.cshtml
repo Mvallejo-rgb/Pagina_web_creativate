@@ -1,0 +1,257 @@
+﻿@model Parkease.Models.Entidades.Conductor
+
+@{
+    ViewData["Title"] = "Registro de Conductor";
+}
+
+<!-- Contenedor principal con margen superior e inferior -->
+<div class="container d-flex justify-content-center align-items-center mt-5 mb-5">
+    <div class="card shadow-lg rounded p-4 d-flex flex-row" style="max-width: 900px; width: 100%;">
+        <!-- Sección de la imagen -->
+        <div class="d-none d-md-block img-container" style="width: 60%; height: 100%;">
+            <img src="https://img.freepik.com/free-photo/man-with-smartphone-near-bicycles-parking-area_613910-14821.jpg" class="img-fluid rounded-start" alt="Imagen decorativa">
+        </div>
+        <div class="col-md-6 bg-white p-4">
+            <div class="text-center mb-3">
+                <div class="con2">
+                    <div class="cuadro-mapa">
+                        <h2>¡Registro!</h2>
+                        <br>
+                        <p class="text-muted">Ingresa tus datos para crear una cuenta</p>
+                    </div>
+                </div>
+
+            <form asp-controller="Auth" asp-action="Registro" method="post" class="needs-validation" novalidate>
+                @Html.AntiForgeryToken()
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-semibold text-start d-block">Primer Nombre*</label>
+                            <input name="primerNombre" class="form-control" required oninput="validateTextInput(this)" />
+                            <div class="invalid-feedback">Ingrese solo letras en su nombre.</div>
+                            <small class="text-danger" style="display: none;">Solo se permiten letras.</small>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label fw-semibold text-start d-block">Primer Apellido*</label>
+                            <input name="primerApellido" class="form-control" required oninput="validateTextInput(this)" />
+                            <div class="invalid-feedback">Ingrese solo letras en su apellido.</div>
+                            <small class="text-danger" style="display: none;">Solo se permiten letras.</small>
+                        </div>
+                    </div>
+                    <div class="row">
+                <div class="mb-3">
+                        <label class="form-label fw-semibold text-start d-block">Correo*</label>
+                    <div class="input-group">
+                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                        <input name="correo" type="email" class="form-control" placeholder="correo@example.com" required />
+                        <div class="invalid-feedback">Ingrese un correo válido.</div>
+                    </div>
+                </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label fw-semibold text-start d-block">Documento*</label>
+                        <input id="numDocu"
+                               name="numDocu"
+                               type="text"
+                               class="form-control input-field"
+                               required
+                               pattern="\d{6,10}"
+                               title="El número de documento debe contener entre 6 y 10 dígitos."
+                               inputmode="numeric"
+                               maxlength="10"
+                               minlength="6"
+                               oninput="validateNumberInput(this)" />
+                        <div class="invalid-feedback">Ingrese un número de documento válido (6-10 dígitos).</div>
+                        <small id="numDocuWarning" class="text-danger" style="display: none;">Solo se permiten números (6-10 dígitos).</small>
+                    </div>
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label fw-semibold text-start d-block">Edad*</label>
+                            <input id="edad"
+                                   type="text"
+                                   class="form-control input-field"
+                                   name="edad"
+                                   required
+                                   maxlength="3"
+                                   oninput="validateAge(this)"
+                                   onkeypress="return onlyNumbers(event)" />
+                            <div class="invalid-feedback">Ingrese una edad válida (mínimo 18 años).</div>
+                            <small id="edadWarning" class="text-danger" style="display: none;">Debe ingresar solo números y ser mayor de 18 años.</small>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label fw-semibold text-start d-block">Placa*</label>
+                            <input id="placa"
+                                   name="placa"
+                                   class="form-control input-field"
+                                   required
+                                   pattern="[A-Z]{3}\d{2}[A-Z0-9]"
+                                   title="El formato de la placa debe ser AAA123 o AAA12A."
+                                   oninput="validatePlaca(this)" />
+                            <div class="invalid-feedback">Ingrese una placa en formato AAA123 o AAA12A.</div>
+                            <small id="placaWarning" class="text-danger" style="display: none;">El formato debe ser AAA123 o AAA12A.</small>
+                        </div>
+                        </div>
+
+                <div class="mb-3">
+                        <label class="form-label fw-semibold text-start d-block">Contraseña*</label>
+                    <div class="input-group">
+                        <input id="contrasena" name="contrasena" type="password" class="form-control" required />
+                        <span class="input-group-text" id="togglePassword" style="cursor: pointer;">
+                            <i class="fa fa-eye" id="eyeIcon"></i>
+                        </span>
+                        <div class="invalid-feedback">Ingrese una contraseña.</div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                        <label class="form-label fw-semibold text-start d-block">Confirmar Contraseña*</label>
+                    <div class="input-group">
+                        <input id="confirmaContra" name="confirmaContra" type="password" class="form-control" required />
+                        <span class="input-group-text" id="toggleConfirmPassword" style="cursor: pointer;">
+                            <i class="fa fa-eye" id="confirmEyeIcon"></i>
+                        </span>
+                    </div>
+                    <div class="text-danger" id="errorContraseña" style="display: none;">Las contraseñas no coinciden</div>
+                </div>
+
+                <!-- Botón de registro -->
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary fw-bold">Registrarse</button>
+                </div>
+
+                <!-- Enlace a inicio de sesión -->
+                <div class="text-center mt-3">
+                    <span class="text-muted">¿Ya tienes cuenta? <a asp-controller="Auth" asp-action="Login" class="text-decoration-none text-primary fw-semibold">Inicia sesión</a></span>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Importación de FontAwesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+<script>
+    // Mostrar y ocultar contraseña
+    document.getElementById("togglePassword").addEventListener("click", function () {
+        let password = document.getElementById("contrasena");
+        let eyeIcon = document.getElementById("eyeIcon");
+        password.type = password.type === "password" ? "text" : "password";
+        eyeIcon.classList.toggle("fa-eye-slash");
+    });
+
+    document.getElementById("toggleConfirmPassword").addEventListener("click", function () {
+        let confirmPassword = document.getElementById("confirmaContra");
+        let confirmEyeIcon = document.getElementById("confirmEyeIcon");
+        confirmPassword.type = confirmPassword.type === "password" ? "text" : "password";
+        confirmEyeIcon.classList.toggle("fa-eye-slash");
+    });
+
+    // Validación de coincidencia de contraseñas
+    document.getElementById("confirmaContra").addEventListener("input", function () {
+        const password = document.getElementById("contrasena").value;
+        const confirmPassword = document.getElementById("confirmaContra").value;
+        const errorMessage = document.getElementById("errorContraseña");
+        errorMessage.style.display = password !== confirmPassword ? "inline" : "none";
+    });
+
+    // Validación de formulario Bootstrap
+    (function () {
+        'use strict';
+        var forms = document.querySelectorAll('.needs-validation');
+        Array.prototype.slice.call(forms).forEach(function (form) {
+            form.addEventListener('submit', function (event) {
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+            }, false);
+        });
+    })();
+</script>
+    <script>
+        (function () {
+            'use strict';
+            let forms = document.querySelectorAll('.needs-validation');
+
+            Array.prototype.slice.call(forms).forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        })();
+    </script>
+           <script>
+        function validateNumberInput(input) {
+            let warning = document.getElementById("numDocuWarning");
+            let previousValue = input.dataset.previousValue || ""; // Guardamos el valor anterior
+
+            // Si se ingresan caracteres no numéricos
+            if (/[^0-9]/.test(input.value)) {
+                warning.style.display = "block"; // Mostrar advertencia
+                input.value = previousValue; // Restaurar valor anterior (sin caracteres inválidos)
+            } else {
+                warning.style.display = "none"; // Ocultar advertencia
+                input.dataset.previousValue = input.value; // Guardar el valor válido
+            }
+        }
+    </script>
+    <script>
+        function validateAge(input) {
+            let warning = document.getElementById("edadWarning");
+
+            // Eliminar caracteres no numéricos
+            input.value = input.value.replace(/\D/g, '');
+
+            // Verificar si el valor ingresado es menor de 18
+            if (input.value !== "" && parseInt(input.value) < 18) {
+                warning.style.display = "block"; // Mostrar advertencia
+            } else {
+                warning.style.display = "none"; // Ocultar advertencia
+            }
+        }
+
+        // Evita que se puedan ingresar letras o caracteres especiales en el input
+        function onlyNumbers(event) {
+            let charCode = event.which ? event.which : event.keyCode;
+
+            // Permitir solo números (códigos de 48 a 57 en ASCII)
+            if (charCode < 48 || charCode > 57) {
+                document.getElementById("edadWarning").style.display = "block";
+                return false;
+            }
+
+            document.getElementById("edadWarning").style.display = "none";
+            return true;
+        }
+    </script>
+    <script>
+        function validatePlaca(input) {
+            let warning = document.getElementById("placaWarning");
+            let placaPattern = /^[A-Z]{3}\d{2}[A-Z0-9]$/; // Expresión regular AAA123 o AAA12A
+
+            if (!placaPattern.test(input.value) && input.value !== "") {
+                warning.style.display = "block"; // Mostrar advertencia
+            } else {
+                warning.style.display = "none"; // Ocultar advertencia
+            }
+        }
+    </script>
+    <script>
+         function validateTextInput(input) {
+             let warning = input.nextElementSibling; // El <small> de advertencia
+             let regex = /^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]*$/; // Permite letras, espacios y tildes
+
+             if (!regex.test(input.value)) {
+                 input.value = input.value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ\s]/g, ''); // Elimina caracteres no permitidos
+                 warning.style.display = "block"; // Muestra la advertencia
+             } else {
+                 warning.style.display = "none"; // Oculta la advertencia
+             }
+         }
+    </script>

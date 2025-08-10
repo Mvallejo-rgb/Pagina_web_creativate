@@ -1,0 +1,50 @@
+﻿@using Parkease.Models.Entidades
+@model List<Reserva>
+
+<h2 class="mb-4 text-center">Mis Reservas</h2>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+@if (Model != null && Model.Count > 0)
+{
+    <div class="row">
+        @foreach (var reserva in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-lg border-0 rounded">
+                    <div class="card-body">
+                        <h5 class="card-title text-primary">Reserva #@reserva.idReserva</h5>
+                        <p class="card-text"><strong>Fecha:</strong> @reserva.fechaReserva.ToShortDateString()</p>
+                        <p class="card-text"><strong>Hora Inicio:</strong> @reserva.horaInicio</p>
+                        <p class="card-text"><strong>Hora Fin:</strong> @reserva.horaFin</p>
+                        <p class="card-text"><strong>Tipo Vehículo:</strong> @reserva.tipoVeh</p>
+                        <p class="card-text">
+                            <strong>Estado:</strong>
+                            <span class="badge @(reserva.estadoReserva == EstadoReserva.Confirmada ? "bg-success" : "bg-warning")">
+                                @reserva.estadoReserva
+                            </span>
+                        </p>
+                        <div class="d-flex justify-content-between mt-3">
+                            <a class="btn btn-outline-primary btn-sm" href="@Url.Action("Edit", new { id = reserva.idReserva })">Editar</a>
+                            <a class="btn btn-outline-danger btn-sm" href="@Url.Action("Delete", new { id = reserva.idReserva })">Eliminar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <div class="alert alert-info text-center">No tienes reservas registradas.</div>
+}
+
+<div class="text-center mt-4">
+    <a asp-controller="Dashboard" asp-action="Index" class="btn btn-secondary btn-sm">Atrás</a>
+    <a asp-controller="Reserva" asp-action="Create" class="btn btn-primary btn-sm">¡Reserva ahora!</a>
+</div>

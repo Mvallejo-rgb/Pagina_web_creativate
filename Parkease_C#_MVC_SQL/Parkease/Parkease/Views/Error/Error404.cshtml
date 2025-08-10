@@ -1,0 +1,36 @@
+﻿@{
+    ViewData["Title"] = "Página No Encontrada";
+}
+
+<main class="d-flex flex-column justify-content-center align-items-center text-center min-vh-100">
+    <div class="error-404">
+        <img src="~/imagenes/logo2.png" alt="Logo" width="150px" class="mb-3">
+
+        <h1 class="error-codigo text-danger fw-bold mt-3">¡Oh no!</h1>
+        <h2 class="error-mensaje text-white">Error 404</h2>
+
+        <img class="error-img img-fluid mt-3"
+             src="https://img.freepik.com/free-vector/car-service-abstract-concept-illustration_335657-1842.jpg?t=st=1743371472~exp=1743375072~hmac=aec9dee7de6fa7d508ed9fa84335d253481d188bfcc187eb743654659d3d0ec0&w=826"
+             alt="Error 404" width="350px">
+
+        <p class="p-descrip text-muted mt-4 fs-5">
+            Lo sentimos, no hemos podido encontrar la página que buscas. <br>
+            Inténtalo nuevamente o regresa al inicio.
+        </p>
+
+        <a href="@Url.Action("Index", "Home")" class="btn btn-primary px-4 py-2 fw-bold rounded-pill shadow-sm transition">
+            <i class="fas fa-arrow-left me-1"></i> Regresar al inicio
+        </a>
+
+        <style>
+            .btn {
+                font-size: 1rem;
+                transition: all 0.2s ease-in-out;
+            }
+
+                .btn:hover {
+                    transform: scale(1.07);
+                }
+        </style>
+    </div>
+</main>

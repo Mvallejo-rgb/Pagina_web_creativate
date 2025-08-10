@@ -1,0 +1,16 @@
+﻿@model Parkease.Models.Entidades.Reserva
+
+<h2>¿Estás seguro de que quieres eliminar esta reserva?</h2>
+
+<div>
+    <p><strong>Fecha:</strong> @Model.fechaReserva</p>
+    <p><strong>Hora Inicio:</strong> @Model.horaInicio</p>
+    <p><strong>Hora Fin:</strong> @Model.horaFin</p>
+    <p><strong>Tipo Vehículo:</strong> @Model.tipoVeh</p>
+</div>
+
+<form asp-action="Delete">
+    <input type="hidden" asp-for="idReserva" />
+    <button type="submit" class="btn btn-danger">Eliminar</button>
+    <a asp-action="MisReservas" class="btn btn-secondary">Cancelar</a>
+</form>

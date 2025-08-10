@@ -1,0 +1,23 @@
+﻿@{
+    ViewData["Title"] = "Confirmación de Factura";
+}
+
+<div class="container mt-5 d-flex justify-content-center">
+    <div class="card shadow-lg p-4 text-center" style="max-width: 600px;">
+        <div class="card-body">
+            <!-- Espacio para imagen -->
+            <img src="https://img.freepik.com/free-photo/3d-hand-with-safe-payment-confirmation-bill_107791-16702.jpg?t=st=1743369598~exp=1743373198~hmac=4adfd9560f44bffebe5257d8efd0ca8b353f0b8fbb1ee1a31e902b40b950966e&w=1060" alt="Factura Confirmada" class="img-fluid mb-3" style="max-height: 150px;">
+
+            <h1 class="text-success fw-bold" style="font-size: 2rem; letter-spacing: 1px; text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);">
+                ¡Tu solicitud fue enviada correctamente!
+            </h1>
+            <p class="text-muted" style="font-size: 1.2rem; margin-top: 10px;">
+                En breve nos contactaremos contigo.
+            </p>
+
+            <a href="@Url.Action("Index", "DashBoard")" class="btn btn-primary mt-3 w-100">
+                Volver al Inicio
+            </a>
+        </div>
+    </div>
+</div>
