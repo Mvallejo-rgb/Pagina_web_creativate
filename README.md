@@ -1,4 +1,4 @@
-# Portafolio-C-digo
+# Portafolio-Código
 Aplicación web desarrollada en C# usando el patrón MVC, conectada a SQL Server para la gestión de parqueaderos. Incluye CRUD completo, validaciones y manejo de datos en tiempo real.
 # Sistema de Gestión de Inventario
 
